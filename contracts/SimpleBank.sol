@@ -103,6 +103,7 @@ contract SimpleBank {
         require(balances[msg.sender] >= withdrawAmount, "Not enough funds.");
         // 2. Transfer Eth to the sender and decrement the withdrawal amount from
         //    sender's balance
+        (bool sent,) = msg.sender.call.value(withdrawAmount)("");
         balances[msg.sender] -= withdrawAmount;
         // 3. Emit the appropriate event for this message
         emit LogWithdrawal(msg.sender, withdrawAmount, balances[msg.sender]);
